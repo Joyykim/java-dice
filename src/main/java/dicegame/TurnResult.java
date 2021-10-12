@@ -1,32 +1,26 @@
 package dicegame;
 
+import java.util.List;
+
 public class TurnResult {
 
     private final String name;
-    private final int diceResult1;
-    private final int diceResult2;
-    private final int currentScore;
+    private final List<ThrowResult> throwResults;
 
-    public TurnResult(String name, int diceResult1, int diceResult2, int currentScore) {
+    public TurnResult(String name, List<ThrowResult> throwResults) {
         this.name = name;
-        this.diceResult1 = diceResult1;
-        this.diceResult2 = diceResult2;
-        this.currentScore = currentScore;
+        this.throwResults = throwResults;
+    }
+
+    public void add(ThrowResult throwResult) {
+        throwResults.add(throwResult);
     }
 
     public String getName() {
         return name;
     }
 
-    public int getDiceResult1() {
-        return diceResult1;
-    }
-
-    public int getDiceResult2() {
-        return diceResult2;
-    }
-
-    public int getCurrentScore() {
-        return currentScore;
+    public List<ThrowResult> getThrowResults() {
+        return throwResults;
     }
 }

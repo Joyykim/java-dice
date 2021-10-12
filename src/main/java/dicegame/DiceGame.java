@@ -2,6 +2,7 @@ package dicegame;
 
 import com.woowahan.techcourse.utils.Randoms;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,13 +13,24 @@ public class DiceGame {
 
     public List<TurnResult> playTurn() {
         return players.getPlayerList().stream()
-                .map(player -> {
-                    int result1 = randomNumber();
-                    int result2 = randomNumber();
-                    player.plusScore(result1, result2);
-                    return new TurnResult(player.getName(), result1, result2, player.getScore());
-                })
+                .map(this::play)
                 .collect(Collectors.toList());
+    }
+
+    private TurnResult play(Player player) {
+        TurnResult turnResult = new TurnResult(player.getName(), new ArrayList<>());
+
+        while (true) {
+            int result1 = randomNumber();
+            int result2 = randomNumber();
+            player.plusScore(result1, result2);
+            turnResult.add(new ThrowResult(result1, result2, player.getScore()));
+
+            if (result1 == result2) {
+                break;
+            }
+        }
+        return turnResult;
     }
 
     public void initPlayers(Players players) {
